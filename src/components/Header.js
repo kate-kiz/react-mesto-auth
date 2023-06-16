@@ -3,8 +3,8 @@ import headerLogo from '../images/logo.svg';
 import { useState, useEffect } from 'react';
 import { Link, useLocation, Route, Routes } from 'react-router-dom';
 
-
-function Header({ userEmail, handleExit, loggedIn, handleRegister }) {
+//handleRegister, loggedIn
+function Header({ userEmail, handleExit }) {
 
     const [headerInfo, setHeaderInfo] = useState({});
 
@@ -12,14 +12,6 @@ function Header({ userEmail, handleExit, loggedIn, handleRegister }) {
 
     function handleButtonExit() {
         handleExit();
-    }
-
-    function handleHeaderLinkClick() {
-        console.log(headerInfo);
-        if (headerInfo.name === 'Выход') {
-            handleExit();
-        }
-
     }
 
 
@@ -62,31 +54,31 @@ function Header({ userEmail, handleExit, loggedIn, handleRegister }) {
                 alt="Логотип Место."
                 className="header__logo" />
 
-            <nav className="header__menu">
-                {loggedIn ? <p className='header__email'>{userEmail}</p> : ''}
-                {/* <Link className="header__link">
+            {/* <nav className="header__menu">
+                {loggedIn ? <p className='header__email'>{userEmail}</p> : ''} */}
+            {/* <Link className="header__link">
                     to={headerInfo.link || ''}
                     onClick={headerInfo.name === "Выход" ? handleButtonExit : null}
                     onClick={handleHeaderLinkClick}
                     {headerInfo.name}
                 </Link> */}
-                <Routes>
-                    <Route path='/' element={(
-                        <div className='header__container'>
-                            <p className='header__paragraph'>{`${userEmail}`}</p>
-                            <button
-                                type="button"
-                                className="header__logout links"
-                                onClick={handleButtonExit}
-                            >
-                                Выйти
-                            </button>
-                        </div>
-                    )} />
-                    <Route path='/sign-up' element={(<><Link to='/sign-in' className="header__link">Войти</Link></>)} />
-                    <Route path='/sign-in' element={(<><Link to='/sign-up' className="header__link">Регистрация</Link></>)} />
-                </ Routes>
-            </nav>
+            <Routes>
+                <Route path='/' element={(
+                    <div className='header__container'>
+                        <p className='header__paragraph'>{`${userEmail}`}</p>
+                        <button
+                            type="button"
+                            className="header__button"
+                            onClick={handleButtonExit}
+                        >
+                            Выйти
+                        </button>
+                    </div>
+                )} />
+                <Route path='/sign-up' element={(<><Link to='/sign-in' className="header__link">Войти</Link></>)} />
+                <Route path='/sign-in' element={(<><Link to='/sign-up' className="header__link">Регистрация</Link></>)} />
+            </ Routes>
+            {/* </nav> */}
         </header>
     )
 }

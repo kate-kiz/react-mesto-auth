@@ -147,6 +147,7 @@ function App() {
     setIsEditProfilePopupOpen(false);
     setIsImageOpen(false);
     setSelectedCard({});
+    setIsInfoToolTipOpen(false);
   }
 
   function handleCardLike(card) {

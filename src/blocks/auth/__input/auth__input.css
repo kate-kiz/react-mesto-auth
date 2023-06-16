@@ -10,7 +10,8 @@
     display: block;
     margin: 0;
     padding: 0;
+    padding-bottom: 13px;
     box-sizing: border-box;
-    /* background-color: transparent; */
+    background-color: transparent;
     color: white;
 }
