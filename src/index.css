@@ -107,3 +107,25 @@
 @import url(./blocks/popup/__place-container/popup__place-container.css);
 
 @import url(./blocks/popup/__container/_confirm/popup__container_confirm.css);
+
+@import url(./blocks/auth/auth.css);
+
+@import url(./blocks/auth/__title/auth__title.css);
+
+@import url(./blocks/auth/__section/auth__section.css);
+
+@import url(./blocks/auth/__link/auth__link.css);
+
+@import url(./blocks/auth/__input/auth__input.css);
+
+@import url(./blocks/auth/__form/auth__form.css);
+
+@import url(./blocks/auth/__form/_login/auth__form_login.css);
+
+@import url(./blocks/auth/__error/_visible/auth__error_visible.css);
+
+@import url(./blocks/auth/__error/auth__error.css);
+
+@import url(./blocks/auth/__button/auth__button.css);
+
+@import url(./blocks/auth/__subtitle/auth__subtitle.css);
