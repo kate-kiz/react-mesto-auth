@@ -35,29 +35,37 @@ function App() {
   // const [isLoading, setIsLoading] = useState(false);
   const [userEmail, setUserEmail] = useState('');
 
+  // useEffect(() => {
+  //   if (loggedIn) {
+  //     navigate('/', { replace: true })
+  //   }
+  // }, [loggedIn])
+
   useEffect(() => {
     tokenCheck();
   }, [])
 
   useEffect(() => {
-    api.getInitialCards()
-      .then(result => {
-        setCards(result)
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  }, [])
+    if (loggedIn === true) {
+      api.getInitialCards()
+        .then(result => {
+          setCards(result)
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+      // }, [])
 
-  useEffect(() => {
-    api.getUserInfo()
-      .then(result => {
-        setCurrentUser(result)
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  }, [])
+      // useEffect(() => {
+      api.getUserInfo()
+        .then(result => {
+          setCurrentUser(result)
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    }
+  }, [loggedIn])
 
 
   function tokenCheck() {
@@ -67,8 +75,8 @@ function App() {
         .then((res) => {
           const userEmail = res.data.email;
           setUserEmail(userEmail);
-          // setLoggedIn(true);
-          handleLogin(res);
+          setLoggedIn(true);
+          // handleLogin(res);
           navigate('/', { replace: true });
         })
         .catch((error) => {
@@ -77,12 +85,6 @@ function App() {
         })
     }
   }
-
-  // function handleLogin({ email }) {
-  //   setLoggedIn(true);
-  //   setUserEmail(email);
-  //   setRegistrated(true);
-  // }
 
   function handleLogin(email, password) {
     Auth.authorize(email, password)
@@ -111,6 +113,7 @@ function App() {
       })
       .catch((error) => {
         console.log(error);
+        setRegistrated(false);
         setIsInfoToolTipOpen(true);
       })
   }
@@ -121,6 +124,10 @@ function App() {
     setUserEmail('');
     navigate('/sign-in', { replace: true });
   }
+
+  useEffect(() => {
+    tokenCheck();
+  }, [])
 
 
   function handleEditProfileClick() {
@@ -218,86 +225,83 @@ function App() {
   }
 
   return (
-    <>
-      <CurrentUserContext.Provider value={currentUser}>
-        <div className="page">
-          <Header userEmail={userEmail} handleExit={deleteToken} />
-          <Routes>
-            <Route path='/' element={
-              <>
-                <ProtectedRoute element={Main}
-                  isLoggedIn={loggedIn}
-                  onUpdateUser={handleUpdateUser}
-                  onAddPlace={handleAddPlaceClick}
-                  onEditAvatar={handleEditAvatarClick}
-                  onEditProfile={handleEditProfileClick}
-                  onCardDelete={handleCardDelete}
-                  onCardLike={handleCardLike}
-                  onCardClick={handleCardClick}
-                  cards={cards}
-                />
-                <ProtectedRoute element={Footer}
-                  isLoggedIn={loggedIn}
-                />
-              </>
-            } />
-            <Route path='/sign-up'
-              element={<Registration
-                onRegister={handleRegister}
-              />}
-            />
-            <Route path='/sign-in'
-              element={<Login
-                onLogin={handleLogin}
-              />}
-            />
-          </Routes>
-        </div>
+    <CurrentUserContext.Provider value={currentUser}>
+      <div className="page">
+        <Header userEmail={userEmail} handleExit={deleteToken} />
+        <Routes>
+          <Route path='/' element={
+            <>
+              <ProtectedRoute element={Main}
+                isLoggedIn={loggedIn}
+                onUpdateUser={handleUpdateUser}
+                onAddPlace={handleAddPlaceClick}
+                onEditAvatar={handleEditAvatarClick}
+                onEditProfile={handleEditProfileClick}
+                onCardDelete={handleCardDelete}
+                onCardLike={handleCardLike}
+                onCardClick={handleCardClick}
+                cards={cards}
+              />
+              <ProtectedRoute element={Footer}
+                isLoggedIn={loggedIn}
+              />
+            </>
+          } />
+          <Route path='/sign-up'
+            element={<Registration
+              onRegister={handleRegister}
+            />}
+          />
+          <Route path='/sign-in'
+            element={<Login
+              onLogin={handleLogin}
+            />}
+          />
+        </Routes>
+      </div>
 
-        <EditProfilePopup
-          isOpen={iseditProfilePopupOpen}
-          onClose={closeAllPopups}
-          currentUser={currentUser}
-          onUpdateUser={handleUpdateUser}
-        />
+      <EditProfilePopup
+        isOpen={iseditProfilePopupOpen}
+        onClose={closeAllPopups}
+        currentUser={currentUser}
+        onUpdateUser={handleUpdateUser}
+      />
 
-        <AddPlacePopup
-          isOpen={isAddPlacePopupOpen}
-          onClose={closeAllPopups}
-          onAddPlace={handleAddPlaceSubmit}
-        />
+      <AddPlacePopup
+        isOpen={isAddPlacePopupOpen}
+        onClose={closeAllPopups}
+        onAddPlace={handleAddPlaceSubmit}
+      />
 
-        <ImagePopup
-          isOpen={isImageOpen}
-          onClose={closeAllPopups}
-          card={selectedCard}
-        />
+      <ImagePopup
+        isOpen={isImageOpen}
+        onClose={closeAllPopups}
+        card={selectedCard}
+      />
 
-        <EdtiAvatarPopup
-          isOpen={isEditAvatarPopupOpen}
-          onClose={closeAllPopups}
-          onUpdateAvatar={handleUpdateAvatar}
-        />
+      <EdtiAvatarPopup
+        isOpen={isEditAvatarPopupOpen}
+        onClose={closeAllPopups}
+        onUpdateAvatar={handleUpdateAvatar}
+      />
 
-        <InfoToolTip
-          name={'success'}
-          successTitle='Вы успешно зарегестрировались!'
-          failureTitle='Что-то пошло не так! Попробуйте еще раз.'
-          isOpen={isInfoToolTipOpen}
-          onClose={closeAllPopups}
-          registrated={registrated}
-        />
+      <InfoToolTip
+        name={'success'}
+        successTitle='Вы успешно зарегестрировались!'
+        failureTitle='Что-то пошло не так! Попробуйте еще раз.'
+        isOpen={isInfoToolTipOpen}
+        onClose={closeAllPopups}
+        registrated={registrated}
+      />
 
-        {/* <PopupWithForm
+      {/* <PopupWithForm
           name='confirmationPopup'
           title='Вы уверены?'
           isOpen={false}
           onClose={closeAllPopups}
           buttonText='Да'
         /> */}
-      </CurrentUserContext.Provider >
-    </>
-
+    </CurrentUserContext.Provider >
   );
 }
 
