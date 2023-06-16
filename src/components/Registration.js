@@ -16,7 +16,7 @@ function Registration({ onRegister }) {
     const handleSubmit = (evt) => {
         evt.preventDefault();
         const { email, password } = formValues;
-        onRegister(email, password);
+        onRegister({ email, password });
 
     }
 

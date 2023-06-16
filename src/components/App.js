@@ -5,7 +5,6 @@ import Main from './Main';
 import ImagePopup from './ImagePopup';
 import Login from './Login';
 import Registration from './Registration';
-import AuthorizationPopup from './AuthorizationPopup';
 import ProtectedRoute from './ProtectedRoute';
 import InfoToolTip from './InfoTooltip';
 import EditProfilePopup from './EditProfilePopup';
@@ -85,10 +84,10 @@ function App() {
   //   setRegistrated(true);
   // }
 
-  function handleLogin(password, email) {
-    Auth.authorize(password, email)
+  function handleLogin(email, password) {
+    Auth.authorize(email, password)
       .then((res) => {
-        if (password && email !== '') {
+        if (email && password !== '') {
           const { token } = res;
           localStorage.getItem('token', token);
           setUserEmail(email);
@@ -103,6 +102,7 @@ function App() {
   }
 
   function handleRegister({ email, password }) {
+    console.log(email, password);
     Auth.register(email, password)
       .then(() => {
         setRegistrated(true);
@@ -225,7 +225,7 @@ function App() {
             <Route path='/' element={
               <>
                 <ProtectedRoute element={Main}
-                  loggedIn={loggedIn}
+                  isLoggedIn={loggedIn}
                   onUpdateUser={handleUpdateUser}
                   onAddPlace={handleAddPlaceClick}
                   onEditAvatar={handleEditAvatarClick}
@@ -236,7 +236,7 @@ function App() {
                   cards={cards}
                 />
                 <ProtectedRoute element={Footer}
-                  loggedIn={loggedIn}
+                  isLoggedIn={loggedIn}
                 />
               </>
             } />

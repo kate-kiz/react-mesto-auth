@@ -11,6 +11,8 @@ function Main({ cards, onAddPlace, onCardClick, onCardDelete, onCardLike, onEdit
 
     const currentUser = useContext(CurrentUserContext);
 
+    console.log(currentUser);
+
     return (
         <main>
             <section className="profile">

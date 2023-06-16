@@ -32,7 +32,7 @@ const authorize = (email, password) => {
             body: JSON.stringify({ email, password })
         })
         .then((res) => {
-            return this._checkForErrors(res);
+            return _checkForErrors(res);
         })
 };
 
@@ -47,20 +47,20 @@ const checkToken = (token) => {
             },
         })
         .then((res) => {
-            return this._checkForErrors(res);
+            return _checkForErrors(res);
         })
 };
 
-const register = (password, email) => {
+const register = (email, password) => {
     return fetch(`${BASE_URL}${ENDPOINT_REGISTER}`,
         {
             method: 'POST',
             headers,
-            body: JSON.stringify({ password, email })
+            body: JSON.stringify({ email, password })
         }
     )
         .then((res) => {
-            return this._checkForErrors(res);
+            return _checkForErrors(res);
         })
 };
 
