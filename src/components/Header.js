@@ -3,7 +3,6 @@ import headerLogo from '../images/logo.svg';
 import { useState, useEffect } from 'react';
 import { Link, useLocation, Route, Routes } from 'react-router-dom';
 
-//handleRegister, loggedIn
 function Header({ userEmail, handleExit }) {
 
     const [headerInfo, setHeaderInfo] = useState({});
@@ -44,24 +43,12 @@ function Header({ userEmail, handleExit }) {
         }
     }, [currentRoute])
 
-    // loggedIn = true
-    // email = "email@test.test"
-
     return (
         <header className="header">
             <img
                 src={headerLogo}
                 alt="Логотип Место."
                 className="header__logo" />
-
-            {/* <nav className="header__menu">
-                {loggedIn ? <p className='header__email'>{userEmail}</p> : ''} */}
-            {/* <Link className="header__link">
-                    to={headerInfo.link || ''}
-                    onClick={headerInfo.name === "Выход" ? handleButtonExit : null}
-                    onClick={handleHeaderLinkClick}
-                    {headerInfo.name}
-                </Link> */}
             <Routes>
                 <Route path='/' element={(
                     <div className='header__container'>
@@ -78,7 +65,6 @@ function Header({ userEmail, handleExit }) {
                 <Route path='/sign-up' element={(<><Link to='/sign-in' className="header__link">Войти</Link></>)} />
                 <Route path='/sign-in' element={(<><Link to='/sign-up' className="header__link">Регистрация</Link></>)} />
             </ Routes>
-            {/* </nav> */}
         </header>
     )
 }

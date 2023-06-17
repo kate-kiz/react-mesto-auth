@@ -32,14 +32,7 @@ function App() {
   const [isInfoToolTipOpen, setIsInfoToolTipOpen] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const [registrated, setRegistrated] = useState(false);
-  // const [isLoading, setIsLoading] = useState(false);
   const [userEmail, setUserEmail] = useState('');
-
-  // useEffect(() => {
-  //   if (loggedIn) {
-  //     navigate('/', { replace: true })
-  //   }
-  // }, [loggedIn])
 
   useEffect(() => {
     tokenCheck();
@@ -54,9 +47,7 @@ function App() {
         .catch((error) => {
           console.log(error)
         })
-      // }, [])
 
-      // useEffect(() => {
       api.getUserInfo()
         .then(result => {
           setCurrentUser(result)
@@ -76,7 +67,6 @@ function App() {
           const userEmail = res.data.email;
           setUserEmail(userEmail);
           setLoggedIn(true);
-          // handleLogin(res);
           navigate('/', { replace: true });
         })
         .catch((error) => {
@@ -91,7 +81,7 @@ function App() {
       .then((res) => {
         if (email && password !== '') {
           const { token } = res;
-          localStorage.getItem('token', token);
+          localStorage.setItem('token', token);
           setUserEmail(email);
           setLoggedIn(true);
           navigate('/', { replace: true });
